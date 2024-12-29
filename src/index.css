@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.vanta-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .vanta-wrapper > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+  
+  .app-wrapper {
+    position: relative;
+    z-index: 10; /* Ensure App is above the background */
+    width: 100%;
+    height: 100%;
+  }
+  
