@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import * as THREE from "three"; // Import Three.js explicitly
+import * as THREE from "three";
 
 const VantaBackground = () => {
   const [vantaEffect, setVantaEffect] = useState(null);
@@ -8,34 +8,31 @@ const VantaBackground = () => {
   useEffect(() => {
     if (!vantaEffect && typeof window !== "undefined") {
       // Dynamically import VANTA
-      import("vanta/dist/vanta.birds.min").then((VANTA) => {
-        setVantaEffect(
-          VANTA.default({ // Use `.default` for the default export
-            el: vantaRef.current,
-            THREE: THREE, // Pass Three.js instance explicitly
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minWidth: 200.0,
-            minHeight: 200.0,
-            scale: 1.0,
-            scaleMobile: 1.0,
-            backgroundColor: 0x7192f,
-            color1: 0xff0000,
-            color2: 0x00ffff,
-            colorMode: "varianceGradient",
-            quantity: 5,
-            birdSize: 1.0,
-            wingSpan: 30,
-            speedLimit: 5,
-            separation: 20.0,
-            alignment: 20.0,
-            cohesion: 20.0,
-          })
-        );
-      }).catch((error) => {
-        console.error("Failed to load Vanta.js: ", error);
-      });
+      import("vanta/dist/vanta.net.min")
+        .then((VANTA) => {
+          setVantaEffect(
+            VANTA.default({
+              el: vantaRef.current,
+              THREE: THREE,
+              mouseControls: true,
+              touchControls: true,
+              gyroControls: false,
+              minWidth: 200.0,
+              minHeight: 200.0,
+              scale: 1.0,
+              scaleMobile: 1.0,
+              color: 0xff3f81, // Color from the image
+              backgroundColor: 0x23153c, // Background color from the image
+              points: 10, // Points from the image
+              maxDistance: 20, // Max distance from the image
+              spacing: 15, // Spacing from the image
+              showDots: true, // Show dots option enabled in the image
+            })
+          );
+        })
+        .catch((error) => {
+          console.error("Failed to load Vanta.js: ", error);
+        });
     }
 
     return () => {
