@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import BIRDS from "vanta/dist/vanta.birds.min";
-import * as THREE from "three";
+import * as THREE from "three"; // Import Three.js explicitly
 
 const VantaBackground = () => {
   const [vantaEffect, setVantaEffect] = useState(null);
   const vantaRef = useRef(null);
 
   useEffect(() => {
-    if (!vantaEffect) {
-      try {
+    if (!vantaEffect && typeof window !== "undefined") {
+      // Dynamically import VANTA
+      import("vanta/dist/vanta.birds.min").then((VANTA) => {
         setVantaEffect(
-          BIRDS({
+          VANTA.default({ // Use `.default` for the default export
             el: vantaRef.current,
-            THREE: THREE, // Pass the Three.js instance
+            THREE: THREE, // Pass Three.js instance explicitly
             mouseControls: true,
             touchControls: true,
             gyroControls: false,
@@ -20,7 +20,7 @@ const VantaBackground = () => {
             minHeight: 200.0,
             scale: 1.0,
             scaleMobile: 1.0,
-            backgroundColor: 0x7192f, // Match your screenshot settings
+            backgroundColor: 0x7192f,
             color1: 0xff0000,
             color2: 0x00ffff,
             colorMode: "varianceGradient",
@@ -33,9 +33,9 @@ const VantaBackground = () => {
             cohesion: 20.0,
           })
         );
-      } catch (error) {
-        console.error("[vanta.js] Birds initialization error: ", error);
-      }
+      }).catch((error) => {
+        console.error("Failed to load Vanta.js: ", error);
+      });
     }
 
     return () => {
